@@ -12,7 +12,7 @@ const pool = new Pool({
 
 pool.connect();
 
-pool.query("DROP TABLE IF EXISTS test_table; CREATE table test_table (id serial PRIMARY KEY, Tên text, Đại_diện text, SĐT text, Email text, LinkFB text, Cần_hỗ_trợ text, Hình_thức_cứu_trợ text, Đối_tượng_ưu_tiên text, Chia_sẻ text, Đề_xuất_khác text); Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Cần_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( 'Nguyễn Khắc Bấc', 'Cá nhân', '0485458945', 'bug@gmail.com','tranducbo88.com' , '1010100' , '10010100', '10101010', '10100', '0');", (err, res) => {
+pool.query("DROP TABLE IF EXISTS test_table; CREATE table test_table (id serial PRIMARY KEY, Tên text, Đại_diện text, SĐT text, Email text, LinkFB text, Yêu_cầu_hỗ_trợ text, Hình_thức_cứu_trợ text, Đối_tượng_ưu_tiên text, Chia_sẻ text, Đề_xuất_khác text); Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Yêu_cầu_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( 'Nguyễn Khắc Bấc', 'Cá nhân', '0485458945', 'bug@gmail.com','tranducbo88.com' , '1010100' , '10010100', '10101010', '10100', '0');", (err, res) => {
   if (err) throw err;
 });
 
@@ -22,12 +22,12 @@ function insertForm(arr) {
   var sdt = arr[2];
   var email = arr[3]
   var link = arr[4]
-  var canHoTro = arr[5].concat(arr[6], arr[7], arr[8], arr[9], arr[10])
+  var yeucauHoTro = arr[5].concat(arr[6], arr[7], arr[8], arr[9], arr[10])
   var hinhThucCuuTro = arr[11].concat(arr[12], arr[13], arr[14])
   var doiTuongUuTien = arr[15].concat(arr[16], arr[17], arr[18], arr[19], arr[21], arr[22], arr[23], arr[24], arr[25], arr[26])
   var chiaSe = arr[27].concat(arr[28], arr[29]) 
   var deXuatKhac = arr[30]
-  var queryString = `Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Cần_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( '${ten}' , '${daiDien}', '${sdt}', '${email}', '${link}', '${canHoTro}' , '${hinhThucCuuTro}', '${doiTuongUuTien}', '${chiaSe}', '${deXuatKhac}');`;
+  var queryString = `Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Yêu_cầu_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( '${ten}' , '${daiDien}', '${sdt}', '${email}', '${link}', '${yeucauHoTro}' , '${hinhThucCuuTro}', '${doiTuongUuTien}', '${chiaSe}', '${deXuatKhac}');`;
 
   pool.query(queryString, (err, res) => {
     if (err) throw err;
@@ -366,9 +366,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[5]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[5] = '1'; 
+        ansArr[5] = 'Thông tin về địa phương \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[5] = '0'; 
+        ansArr[5] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/ Chị có muốn tôi cung cấp thông tin về danh sách các hoàn cảnh bị thiệt hại và cần được hỗ trợ xác minh các trường hợp này không?' };
@@ -377,9 +377,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[6]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[6] = '1'; 
+        ansArr[6] = 'Thông tin về các hoàn cảnh \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[6] = '0'; 
+        ansArr[6] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/ Chị có nhu cầu kết nối với chính quyền và các tổ chức tại địa phương không ạ?' };
@@ -388,9 +388,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[7]){
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[7] = '1'; 
+        ansArr[7] = 'Kết nối với chính quyền \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[7] = '0'; 
+        ansArr[7] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/ Chị có muốn kết nối với tình nguyện viên/ tổ chức từ thiện khác ở cùng khu vực không ạ?' };
@@ -399,9 +399,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[8]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[8] = '1'; 
+        ansArr[8] = 'Kết nối với tổ chức khác \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[8] = '0'; 
+        ansArr[8] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/ Chị có cần hỗ trợ chuyển tiền, hàng cứu trợ đến tận tay người được cứu trợ không ạ?' };
@@ -410,9 +410,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[9]){
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[9] = '1'; 
+        ansArr[9] = 'Chuyển cứu trợ \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[9] = '0'; 
+        ansArr[9] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/ Chị có muốn huy động được nhiều nguồn lực hơn bằng truyền thông không ạ?' };
@@ -421,9 +421,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[10]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[10] = '1'; 
+        ansArr[10] = 'Nguồn lực \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[10] = '0'; 
+        ansArr[10] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Về hình thức cứu trợ, Anh/Chị có nhu cầu Gửi tiền không ạ?' };
@@ -432,9 +432,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[11]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[11] = '1'; 
+        ansArr[11] = 'Gửi tiền \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[11] = '0'; 
+        ansArr[11] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Vậy còn Gửi hàng có phải 1 trong những hình thức cứu trợ mà Anh/Chị đang quan tâm không ạ?' };
@@ -443,9 +443,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[12]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[12] = '1'; 
+        ansArr[12] = 'Gửi hàng \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[12] = '0'; 
+        ansArr[12] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có đang quan tâm đến hình thức cứu trợ Hỗ trợ lâu dài không ạ?' };
@@ -454,9 +454,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[13]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[13] = '1'; 
+        ansArr[13] = 'Hỗ trợ lâu dài \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[13] = '0'; 
+        ansArr[13] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn cứu trợ bằng hình thức khác bên trên không ạ?' };
@@ -468,20 +468,20 @@ function handleMessage(sender_psid, received_message) {
         ansArr[14] = '1'; 
         response = { "text": 'Vậy hình thức đó là gì ạ?' };
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[14] = '0';
+        ansArr[14] = '';
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Bất cứ ai có hoàn cảnh khó khăn không ạ?' };
       } else {
-        ansArr[14] = received_message.text;
+        ansArr[14] = received_message.text.concat('\n');
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Bất cứ ai có hoàn cảnh khó khăn không ạ?' };
       }
     } else if (ansArr[14] === '1'){                    
-      ansArr[14] = received_message.text; 
+      ansArr[14] = received_message.text.concat('\n'); 
       response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Bất cứ ai có hoàn cảnh khó khăn không ạ?' };
     } else if (!ansArr[15]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[15] = '1'; 
+        ansArr[15] = 'Hoàn cảnh khó khăn \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[15] = '0'; 
+        ansArr[15] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có ưu tiên giúp đỡ Người già không ạ?' };
@@ -490,9 +490,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[16]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[16] = '1'; 
+        ansArr[16] = 'Người già \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[16] = '0'; 
+        ansArr[16] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Người bệnh có nằm trong danh sách đối tượng ưu tiên của Anh/Chị không ạ?' };
@@ -501,9 +501,9 @@ function handleMessage(sender_psid, received_message) {
       } 
     } else if (!ansArr[17]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[17] = '1'; 
+        ansArr[17] = 'Người bệnh \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[17] = '0'; 
+        ansArr[17] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có bao gồm Trẻ em không ạ?' };
@@ -512,9 +512,9 @@ function handleMessage(sender_psid, received_message) {
       } 
     } else if (!ansArr[18]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[18] = '1'; 
+        ansArr[18] = 'Trẻ em \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[18] = '0'; 
+        ansArr[18] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Nông dân không ạ?' };
@@ -523,9 +523,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[19]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[19] = '1'; 
+        ansArr[19] = 'Nông dân \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[19] = '0'; 
+        ansArr[19] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Ngư dân có nằm trong danh sách đối tượng ưu tiên của Anh/Chị không ạ?' };
@@ -534,9 +534,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[20]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[20] = '1'; 
+        ansArr[20] = 'Ngư dân \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[20] = '0'; 
+        ansArr[20] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Trường học không ạ?' };
@@ -545,9 +545,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[21]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[21] = '1'; 
+        ansArr[21] = 'Trường học \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[21] = '0'; 
+        ansArr[21] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có bao gồm Cơ sở Y tế không ạ?' };
@@ -556,9 +556,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[22]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[22] = '1'; 
+        ansArr[22] = 'Cơ sở y tế \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[22] = '0'; 
+        ansArr[22] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Xây dựng hạ tầng (điện đường trường trạm) không ạ?' };
@@ -567,9 +567,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[23]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[23] = '1'; 
+        ansArr[23] = 'Xây dựng hạ tầng \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[23] = '0'; 
+        ansArr[23] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Cung cấp nước sạch, vệ sinh sạch không ạ?' };
@@ -578,9 +578,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[24]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[24] = '1'; 
+        ansArr[24] = 'Nước sạch \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[24] = '0'; 
+        ansArr[24] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Cung cấp nhà an toàn trong lũ không ạ?' };
@@ -589,9 +589,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[25]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[25] = '1'; 
+        ansArr[25] = 'Nhà an toàn \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[25] = '0'; 
+        ansArr[25] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Có đối tượng khác ngoài các đối tượng bên trên mà Anh/Chị cũng muốn ưu tiên không ạ?' };
@@ -606,17 +606,17 @@ function handleMessage(sender_psid, received_message) {
         ansArr[26] = '0';
         response = { "text": 'Anh/Chị có muốn chia sẻ Các dữ liệu các hoàn cảnh / hộ cần cứu trợ mà mình có không ạ?' };
       } else {
-        ansArr[26] = received_message.text;
+        ansArr[26] = received_message.text.concat('\n');
         response = { "text": 'Anh/Chị có muốn chia sẻ Các dữ liệu các hoàn cảnh / hộ cần cứu trợ mà mình có không ạ?' };
       }
     } else if (ansArr[26] === '1'){                    
-      ansArr[26] = received_message.text; 
+      ansArr[26] = received_message.text.concat('\n');
       response = { "text": 'Anh/Chị có muốn chia sẻ Các dữ liệu các hoàn cảnh / hộ cần cứu trợ mà mình có không ạ?' };
     } else if (!ansArr[27]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[27] = '1'; 
+        ansArr[27] = 'Các hoàn cảnh \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[27] = '0'; 
+        ansArr[27] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Sau khi cứu trợ, Anh/Chị có muốn chia sẻ hình ảnh và thông tin đã cứu trợ với chúng tôi không ạ?' };
@@ -625,9 +625,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[28]){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[28] = '1'; 
+        ansArr[28] = 'Hình ảnh cứu trợ \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[28] = '0'; 
+        ansArr[28] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có muốn chia sẻ với chúng tôi bằng cách Tham gia tình nguyện viên cùng chiến dịch không ạ?' };
@@ -636,9 +636,9 @@ function handleMessage(sender_psid, received_message) {
       }
     } else if (!ansArr[29]){     
       if (intentName == 'yes' && intentConf >= 0.7) {
-        ansArr[29] = '1'; 
+        ansArr[29] = 'Tham gia tình nguyện viên \n'; 
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[29] = '0'; 
+        ansArr[29] = ''; 
       }
       if (intentConf >= 0.7) {
         response = { "text": 'Anh/Chị có Ý tưởng, Đề xuất khác muốn chia sẻ với cộng đồng không ạ?' };
@@ -650,16 +650,16 @@ function handleMessage(sender_psid, received_message) {
         ansArr[30] = '1'; 
         response = { "text": 'Vậy Anh/Chị muốn chia sẻ ý tưởng, đề xuất điều gì ạ?' };
       } else if (intentName == 'no' && intentConf >= 0.7) {
-        ansArr[30] = '0';
+        ansArr[30] = '';
         response = { "text": 'Việc thu thập thông tin này được thực hiện trong khuôn khổ Chiến dịch xã hội “Hỗ trợ người cứu trợ - Hướng về khúc ruột miền Trung”, được phát động bởi Đội tình nguyện viên Hỗ trợ điều phối thông tin cứu trợ.\n\nThông tin và yêu cầu của Anh/Chị đã được ghi nhận. Xin chân thành cảm ơn Anh/Chị đã dành thời gian trả lời ^^!' };
         insertForm(ansArr);
       } else {
-        ansArr[30] = received_message.text;
+        ansArr[30] = received_message.text.concat('\n');
         response = { "text": 'Việc thu thập thông tin này được thực hiện trong khuôn khổ Chiến dịch xã hội “Hỗ trợ người cứu trợ - Hướng về khúc ruột miền Trung”, được phát động bởi Đội tình nguyện viên Hỗ trợ điều phối thông tin cứu trợ.\n\nThông tin và yêu cầu của Anh/Chị đã được ghi nhận. Xin chân thành cảm ơn Anh/Chị đã dành thời gian trả lời ^^!' };
         insertForm(ansArr);
       }
     } else if (ansArr[30] === '1'){                    
-      ansArr[30] = received_message.text; 
+      ansArr[30] = received_message.text.concat('\n');
       response = { "text": 'Việc thu thập thông tin này được thực hiện trong khuôn khổ Chiến dịch xã hội “Hỗ trợ người cứu trợ - Hướng về khúc ruột miền Trung”, được phát động bởi Đội tình nguyện viên Hỗ trợ điều phối thông tin cứu trợ.\n\nThông tin và yêu cầu của Anh/Chị đã được ghi nhận. Xin chân thành cảm ơn Anh/Chị đã dành thời gian trả lời ^^!' };
       insertForm(ansArr);
     } 
