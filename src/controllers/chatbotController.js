@@ -741,4 +741,5 @@ function handleMessage(sender_psid, received_message) {
         getHomepage: getHomepage,
         getWebhook: getWebhook,
         postWebhook: postWebhook,
+        getDb: getDb,
     }
