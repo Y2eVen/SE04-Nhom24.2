@@ -71,11 +71,14 @@ let postWebhook = (req, res) => {
 
 const { spawn } = require('child_process');
 
-var delayedTime = 2600
+var delayedTime = 3000
 
-var name = {
+var curUserResponse = {
   "text" : ""
 };
+ 
+var regexPhoneNum = /[\+]?[(]?[8]?[4]?[0-9]{2}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}/im;
+var regexEmail = /(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))/im;
 
 var ansArr = []
 
@@ -105,13 +108,13 @@ var askNameQs = {
     7: 'Tôi có thể biết tôi đang nói chuyện với ai được không?',
 }
 
-function checkName(data) {
-  let childPython = spawn('python', ['test2.py', data]);
+function modifyResponse(fileName,data) {
+  let childPython = spawn('python', [fileName, data]);
         childPython.stdout.on('data', function(data) {
           
           // var obj = JSON.parse(`${data}`);
           // console.log(obj.nerLabel);  
-          name = {
+          curUserResponse = {
             "text" : `${data}` 
           }
         
@@ -124,7 +127,8 @@ function checkName(data) {
             console.log(`child process exited with code ${code}`)
         });
 }
-checkName("h");
+
+modifyResponse('getName.py', "h");
 
 function sendGreeting(sender_psid) {
     let rsp_1;
@@ -195,69 +199,126 @@ function getYNTemplate(tittle, payload1, payload2) {
 function handleMessage(sender_psid, received_message) {
   
   let response ;
-
-  // Check if the message contains text
-  if (received_message.text) {
-    if (received_message.text === 'Xin chào' || received_message.text === 'Bắt đầu trò chuyện') {
-      sendGreeting(sender_psid);
-    } else if (!ansArr[0]) {
-      checkName(received_message.text);
-      setTimeout(() => {
-        if (name.text != "") {
-           
-          ansArr[0] = name.text;
-          response = {
-            "attachment": {
-              "type": "template",
-              "payload": {
-                "template_type": "generic",
-                "elements": [{
-                  "title": "Anh/ Chị muốn ủng hộ theo cá nhân hay tổ chức?",
-                  "subtitle": "Anh/Chị có thể chọn nút ở bên dưới để trả lời",
-                  "buttons": [
-                    {
-                      "type": "postback",
-                      "title": "Cá nhân",
-                      "payload": "canhan",
-                    },
-                    {
-                      "type": "postback",
-                      "title": "Tổ chức",
-                      "payload": "tochuc",
-                    },
-                    {
-                      "type": "postback",
-                      "title": "Khác",
-                      "payload": "donvikhac",
-                    }
-                  ],
-                }]
+    
+    // Check if the message contains text
+    if (received_message.text) {
+      // example: received_message.nlp.intents[0] = 
+      // { id: '179680580557548', name: 'greeting', confidence: 0.7498 }
+      let objIntent = received_message.nlp.intents[0];
+    
+      let intentName = ''
+      let intentConf = 0
+      if (objIntent) {
+        intentName = objIntent.name
+        intentConf = objIntent.confidence
+      }
+      
+      if (intentName == 'greeting' && intentConf >= 0.7) {
+        sendGreeting(sender_psid);
+      } else if (!ansArr[0] && intentName == 'yes' && intentConf >= 0.7) {
+        ansArr[0] = 1;
+        let randNum = Math.floor(Math.random() * Object.keys(askNameQs).length) + 1;
+        let txt = askNameQs[randNum];
+        response = { "text": txt }
+      } else if (ansArr[0] == 1) {
+        modifyResponse('getName.py', received_message.text);
+        setTimeout(() => {
+          if (curUserResponse.text != "") {
+            ansArr[0] = curUserResponse.text;
+            response = {
+              "attachment": {
+                "type": "template",
+                "payload": {
+                  "template_type": "generic",
+                  "elements": [{
+                    "title": "Anh/ Chị muốn ủng hộ theo cá nhân hay tổ chức?",
+                    "subtitle": "Anh/Chị có thể chọn nút ở bên dưới để trả lời",
+                    "buttons": [
+                      {
+                        "type": "postback",
+                        "title": "Cá nhân",
+                        "payload": "canhan",
+                      },
+                      {
+                        "type": "postback",
+                        "title": "Tổ chức",
+                        "payload": "tochuc",
+                      },
+                      {
+                        "type": "postback",
+                        "title": "Khác",
+                        "payload": "donvikhac",
+                      }
+                    ],
+                  }]
+                }
               }
             }
+          } else {
+            let randNum = Math.floor(Math.random() * Object.keys(askNameQs).length) + 1;
+            let txt = askNameQs[randNum];
+            response = { "text": txt };
           }
+        }, delayedTime);
+      } 
+      else if (!ansArr[1]) {
+        if (intentName == 'ca_nhan' && intentConf >= 0.7) {
+          ansArr[1] = "Cá nhân";
+          let randNum = Math.floor(Math.random() * Object.keys(askPhoneNumQs).length) + 1;
+          let txt = askPhoneNumQs[randNum];
+          response = { "text": txt };
+        } else if (intentName == 'to_chuc' && intentConf >= 0.7) {
+          ansArr[1] = "Tổ chức";
+          let randNum = Math.floor(Math.random() * Object.keys(askOrgQs).length) + 1;
+          let txt = askOrgQs[randNum];
+          response = { "text": txt };
+        } else if (intentName == 'khac' && intentConf >= 0.7) {
+          ansArr[1] = "Khác";
+          let randNum = Math.floor(Math.random() * Object.keys(askOtherOrgQs).length) + 1;
+          let txt = askOtherOrgQs[randNum];
+          response = { "text": txt };
+        } 
+      }
+      else if (ansArr[1] === 'Tổ chức') {
+        // cần nhận diện tên tổ chức ở đây
+        ansArr[1] = received_message.text;
+        let randNum = Math.floor(Math.random() * Object.keys(askPhoneNumQs).length) + 1;
+        let txt = askPhoneNumQs[randNum];
+        response = { "text": txt };
+      }
+      else if (ansArr[1] === 'Khác') {
+        ansArr[1] = received_message.text;
+        let randNum = Math.floor(Math.random() * Object.keys(askPhoneNumQs).length) + 1;
+        let txt = askPhoneNumQs[randNum];
+        response = { "text": txt };
+      }
+      else if (!ansArr[2]){ 
+        let phoneNum = received_message.text.match(regexPhoneNum);
+        if (phoneNum) {
+          ansArr[2] = phoneNum[0]; 
+          response = { "text": 'Email để liên lạc của Anh/Chị là gì nhỉ?' };
         } else {
-          let randNum = Math.floor(Math.random() * Object.keys(askNameQs).length) + 1;
-          let txt = askNameQs[randNum];
+          let randNum = Math.floor(Math.random() * Object.keys(askPhoneNumQs).length) + 1;
+          let txt = askPhoneNumQs[randNum];
           response = { "text": txt };
         }
-      }, delayedTime);
-    } 
-    else if (ansArr[1] === 'Tổ chức') {
-      ansArr[1] = received_message.text;
-      let randNum = Math.floor(Math.random() * Object.keys(askPhoneNumQs).length) + 1;
-      let txt = askPhoneNumQs[randNum];
-      response = { "text": txt };
-    }
-    else if (!ansArr[2]){ 
-      ansArr.push(received_message.text); // Assume that user has sent appropriate phone number
-      response = { "text": 'Email để liên lạc của Anh/Chị là gì nhỉ?' };
-    } else if (!ansArr[3]) { 
-      ansArr.push(received_message.text); // Assume that user has sent appropriate email
-      response = { "text": 'Đường link đến Facebook của Anh/Chị là gì nhỉ?\nNếu Anh/Chị dùng phương thức khác thì hãy cho tôi biết tên phương thức và tên tài khoản tương ứng.' };
-    } else if (!ansArr[4]) {
-      ansArr.push(received_message.text);
-      response = { "text": 'Anh/ Chị có cần hỗ trợ thông tin về địa phương chịu thiệt hại nhất, chưa được hỗ trợ nhiều không ạ?' };
-    } else if (!ansArr[5]){ 
+      } else if (!ansArr[3]) { 
+        let email = received_message.text.match(regexEmail);
+        if (email) {
+          ansArr.push(received_message.text); 
+          response = { "text": 'Đường link đến Facebook của Anh/Chị là gì nhỉ?\nNếu Anh/Chị dùng phương thức khác thì hãy cho tôi biết tên phương thức và tên tài khoản tương ứng.' };
+        } else {
+          response = { "text": 'Email để liên lạc của Anh/Chị là gì nhỉ?' };
+        }
+      } else if (!ansArr[4]) {
+        let objEntity = Object.values(received_message.nlp.entities)[0];
+        if (objEntity && objEntity[0].name == 'wit$url') {
+          ansArr.push(objEntity[0].value);
+          response = { "text": 'Anh/ Chị có cần hỗ trợ thông tin về địa phương chịu thiệt hại nhất, chưa được hỗ trợ nhiều không ạ?' };  
+        } else {
+          response = { "text": 'Đường link đến Facebook của Anh/Chị là gì nhỉ?\nNếu Anh/Chị dùng phương thức khác thì hãy cho tôi biết tên phương thức và tên tài khoản tương ứng.' };
+        }
+      } else if (!ansArr[5]){ 
       ansArr.push(received_message.text); 
       response = { "text": 'Anh/ Chị có muốn tôi cung cấp thông tin về danh sách các hoàn cảnh bị thiệt hại và cần được hỗ trợ xác minh các trường hợp này không?' };
     } else if (!ansArr[6]){ 
@@ -385,6 +446,7 @@ function handleMessage(sender_psid, received_message) {
       } else if (payload === 'no') {
         response = { "text": "Oops, try sending another pig." }
       } else if (payload === 'dungvay') {
+        ansArr[0] = 1;
         let randNum = Math.floor(Math.random() * Object.keys(askNameQs).length) + 1;
         let txt = askNameQs[randNum];
         response = { "text": txt }
@@ -399,7 +461,7 @@ function handleMessage(sender_psid, received_message) {
         let txt = askOrgQs[randNum];
         response = { "text": txt };
       } else if (payload === 'donvikhac') {
-        ansArr[1] = "Tổ chức";
+        ansArr[1] = "Khác";
         let randNum = Math.floor(Math.random() * Object.keys(askOtherOrgQs).length) + 1;
         let txt = askOtherOrgQs[randNum];
         response = { "text": txt };
