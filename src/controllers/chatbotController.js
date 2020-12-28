@@ -12,7 +12,7 @@ const pool = new Pool({
 
 pool.connect();
 
-pool.query("DROP TABLE IF EXISTS test_table; CREATE table test_table (id serial PRIMARY KEY, Tên text, Đại_diện text, SĐT text, Email text, LinkFB text, Cần_hỗ_trợ text, Hình_thức_cứu_trợ text, Đối_tượng_ưu_tiên text, Chia_sẻ text, Đề_xuất_khác text); Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Cần_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( 'Lil hoe', 'Cá nhân', '0485458945', 'hao@gmail.com','hjjg.com' , '101010Khong' , '1001010Khong', '1010100Khong', '1010Khong', 'Khong');", (err, res) => {
+pool.query("DROP TABLE IF EXISTS test_table; CREATE table test_table (id serial PRIMARY KEY, Tên text, Đại_diện text, SĐT text, Email text, LinkFB text, Cần_hỗ_trợ text, Hình_thức_cứu_trợ text, Đối_tượng_ưu_tiên text, Chia_sẻ text, Đề_xuất_khác text); Insert into test_table( Tên, Đại_diện , SĐT, Email, LinkFB, Cần_hỗ_trợ, Hình_thức_cứu_trợ, Đối_tượng_ưu_tiên, Chia_sẻ, Đề_xuất_khác) values ( 'Nguyễn Khắc Bấc', 'Cá nhân', '0485458945', 'bug@gmail.com','tranducbo88.com' , '1010100' , '10010100', '10101010', '10100', '0');", (err, res) => {
   if (err) throw err;
 });
 
