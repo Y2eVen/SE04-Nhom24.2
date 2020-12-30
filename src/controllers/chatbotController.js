@@ -370,7 +370,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Đường link đến Facebook của Anh/Chị là gì nhỉ?\nNếu Anh/Chị dùng phương thức khác thì hãy cho tôi biết tên phương thức và tên tài khoản tương ứng.' };
       }
-    } else if (!ansArr[5]) {
+    } else if (ansArr[5] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[5] = 'Thông tin về địa phương \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -381,7 +381,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có cần hỗ trợ thông tin về địa phương chịu thiệt hại nhất, chưa được hỗ trợ nhiều không ạ?' };
       }
-    } else if (!ansArr[6]) {
+    } else if (ansArr[6] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[6] = 'Thông tin về các hoàn cảnh \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -392,7 +392,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có muốn tôi cung cấp thông tin về danh sách các hoàn cảnh bị thiệt hại và cần được hỗ trợ xác minh các trường hợp này không?' };
       }
-    } else if (!ansArr[7]) {
+    } else if (ansArr[7] == null){
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[7] = 'Kết nối với chính quyền \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -403,7 +403,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có nhu cầu kết nối với chính quyền và các tổ chức tại địa phương không ạ?' };
       }
-    } else if (!ansArr[8]) {
+    } else if (ansArr[8] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[8] = 'Kết nối với tổ chức khác \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -414,7 +414,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có muốn kết nối với tình nguyện viên/ tổ chức từ thiện khác ở cùng khu vực không ạ?' };
       }
-    } else if (!ansArr[9]) {
+    } else if (ansArr[9] == null){
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[9] = 'Chuyển cứu trợ \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -425,7 +425,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có cần hỗ trợ chuyển tiền, hàng cứu trợ đến tận tay người được cứu trợ không ạ?' };
       }
-    } else if (!ansArr[10]) {
+    } else if (ansArr[10] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[10] = 'Nguồn lực \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -436,7 +436,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/ Chị có muốn huy động được nhiều nguồn lực hơn bằng truyền thông không ạ?' };
       }
-    } else if (!ansArr[11]) {
+    } else if (ansArr[11] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[11] = 'Gửi tiền \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -447,7 +447,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Về hình thức cứu trợ, Anh/Chị có nhu cầu Gửi tiền không ạ?' };
       }
-    } else if (!ansArr[12]) {
+    } else if (ansArr[12] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[12] = 'Gửi hàng \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -458,7 +458,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Vậy còn Gửi hàng có phải 1 trong những hình thức cứu trợ mà Anh/Chị đang quan tâm không ạ?' };
       }
-    } else if (!ansArr[13]) {
+    } else if (ansArr[13] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[13] = 'Hỗ trợ lâu dài \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -469,7 +469,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có đang quan tâm đến hình thức cứu trợ Hỗ trợ lâu dài không ạ?' };
       }
-    } else if (!ansArr[14]) {
+    } else if (ansArr[14] == null){                    
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[14] = '1';
         response = { "text": 'Vậy hình thức đó là gì ạ?' };
@@ -483,7 +483,7 @@ function handleMessage(sender_psid, received_message) {
     } else if (ansArr[14] === '1') {
       ansArr[14] = received_message.text.concat('\n');
       response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Bất cứ ai có hoàn cảnh khó khăn không ạ?' };
-    } else if (!ansArr[15]) {
+    } else if (ansArr[15] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[15] = 'Hoàn cảnh khó khăn \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -494,7 +494,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Bất cứ ai có hoàn cảnh khó khăn không ạ?' };
       }
-    } else if (!ansArr[16]) {
+    } else if (ansArr[16] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[16] = 'Người già \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -504,8 +504,8 @@ function handleMessage(sender_psid, received_message) {
         response = { "text": 'Người bệnh có nằm trong danh sách đối tượng ưu tiên của Anh/Chị không ạ?' };
       } else {
         response = { "text": 'Anh/Chị có ưu tiên giúp đỡ Người già không ạ?' };
-      }
-    } else if (!ansArr[17]) {
+      } 
+    } else if (ansArr[17] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[17] = 'Người bệnh \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -515,8 +515,8 @@ function handleMessage(sender_psid, received_message) {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có bao gồm Trẻ em không ạ?' };
       } else {
         response = { "text": 'Người bệnh có nằm trong danh sách đối tượng ưu tiên của Anh/Chị không ạ?' };
-      }
-    } else if (!ansArr[18]) {
+      } 
+    } else if (ansArr[18] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[18] = 'Trẻ em \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -527,7 +527,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có bao gồm Trẻ em không ạ?' };
       }
-    } else if (!ansArr[19]) {
+    } else if (ansArr[19] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[19] = 'Nông dân \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -538,7 +538,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có phải là Nông dân không ạ?' };
       }
-    } else if (!ansArr[20]) {
+    } else if (ansArr[20] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[20] = 'Ngư dân \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -549,7 +549,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Ngư dân có nằm trong danh sách đối tượng ưu tiên của Anh/Chị không ạ?' };
       }
-    } else if (!ansArr[21]) {
+    } else if (ansArr[21] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[21] = 'Trường học \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -560,7 +560,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Trường học không ạ?' };
       }
-    } else if (!ansArr[22]) {
+    } else if (ansArr[22] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[22] = 'Cơ sở y tế \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -571,7 +571,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Đối tượng Anh/Chị ưu tiên có bao gồm Cơ sở Y tế không ạ?' };
       }
-    } else if (!ansArr[23]) {
+    } else if (ansArr[23] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[23] = 'Xây dựng hạ tầng \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -582,7 +582,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Xây dựng hạ tầng (điện đường trường trạm) không ạ?' };
       }
-    } else if (!ansArr[24]) {
+    } else if (ansArr[24] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[24] = 'Nước sạch \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -593,7 +593,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Cung cấp nước sạch, vệ sinh sạch không ạ?' };
       }
-    } else if (!ansArr[25]) {
+    } else if (ansArr[25] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[25] = 'Nhà an toàn \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -604,7 +604,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn ưu tiên giúp đỡ Cung cấp nhà an toàn trong lũ không ạ?' };
       }
-    } else if (!ansArr[26]) {
+    } else if (ansArr[26] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[26] = '1';
         response = { "text": 'Vậy đối tượng đó là ai ạ?' };
@@ -618,7 +618,7 @@ function handleMessage(sender_psid, received_message) {
     } else if (ansArr[26] === '1') {
       ansArr[26] = received_message.text.concat('\n');
       response = { "text": 'Anh/Chị có muốn chia sẻ Các dữ liệu các hoàn cảnh / hộ cần cứu trợ mà mình có không ạ?' };
-    } else if (!ansArr[27]) {
+    } else if (ansArr[27] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[27] = 'Các hoàn cảnh \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -629,7 +629,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn chia sẻ Các dữ liệu các hoàn cảnh / hộ cần cứu trợ mà mình có không ạ?' };
       }
-    } else if (!ansArr[28]) {
+    } else if (ansArr[28] == null){ 
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[28] = 'Hình ảnh cứu trợ \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -640,7 +640,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Sau khi cứu trợ, Anh/Chị có muốn chia sẻ hình ảnh và thông tin đã cứu trợ với chúng tôi không ạ?' };
       }
-    } else if (!ansArr[29]) {
+    } else if (ansArr[29] == null){     
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[29] = 'Tham gia tình nguyện viên \n';
       } else if (intentName == 'no' && intentConf >= 0.7) {
@@ -651,7 +651,7 @@ function handleMessage(sender_psid, received_message) {
       } else {
         response = { "text": 'Anh/Chị có muốn chia sẻ với chúng tôi bằng cách Tham gia tình nguyện viên cùng chiến dịch không ạ?' };
       }
-    } else if (!ansArr[30]) {
+    } else if (ansArr[30] == null){  
       if (intentName == 'yes' && intentConf >= 0.7) {
         ansArr[30] = '1';
         response = { "text": 'Vậy Anh/Chị muốn chia sẻ ý tưởng, đề xuất điều gì ạ?' };
