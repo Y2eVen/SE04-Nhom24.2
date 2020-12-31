@@ -10,7 +10,7 @@
 
 
 # 1. Mục tiêu
-* Xây dựng chat bot phục vụ thương mại - Sử dụng opensource của Facebook để dựng chat bot phân tích và trả lời tự động, sử dụng làm tổng đài chăm sóc khách hàng của một trang web
+* Xây dựng chatbot cứu trợ miền Trung - Sử dụng opensource của Facebook để dựng chatbot phân tích và trả lời tự động.
 
 # 2. Giao diện
 * Sử dụng trực tiếp fanpage trên Facebook
