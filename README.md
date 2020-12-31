@@ -1,4 +1,5 @@
 # <span style="color:red;">SE04-Nhom24.2</span>
+
 ## Thành viên trong nhóm:
 
 ## Lê Văn Hào
@@ -14,14 +15,12 @@
 # 2. Giao diện
 * Sử dụng trực tiếp fanpage trên Facebook
 
-# 3. Chức năng
-
-
-# 4. Công nghệ và công cụ sử dụng
-## 4.1. Công nghệ
+# 3. Công nghệ và công cụ sử dụng
+## 3.1. Công nghệ
 * Ngôn ngữ lập trình: ..
 
-## 4.2. Công cụ sử dụng
+## 3.2. Công cụ sử dụng
+
+# 4. Công việc triển khai.
 
 
-# 5. Hướng dẫn sử dụng
