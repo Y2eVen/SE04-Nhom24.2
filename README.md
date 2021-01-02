@@ -14,17 +14,24 @@
 Đó là xây dựng 1 Chatbot Messenger có thể phân tích và trả lời tự động. 
 * Chatbot của dự án đảm nhận module Hỗ trợ người cần cứu trợ bằng cách trò chuyện với họ, lắng nghe và ghi lại nguyện vọng, mong 
 muốn của họ để sẵn sàng giúp đỡ họ.
-# 2. Mục tiêu
+# 2. Goals
 * Xây dựng chatbot cứu trợ miền Trung - Sử dụng opensource của Facebook để dựng chatbot phân tích và trả lời tự động.
 
-# 3. Giao diện
-* Sử dụng trực tiếp fanpage trên Facebook
+# 3. Objectives
+
+# 4. Kiến trúc hệ thống
+![alt_text](SystemArchitecture.png)
+
 
 # 4. Công nghệ và công cụ sử dụng
 ## 4.1. Công nghệ
-* Ngôn ngữ lập trình: ..
+* Ngôn ngữ lập trình: 
+  * JavaScript
+  * Python
 
 ## 4.2. Công cụ sử dụng
+* IDE Visual Studio Code
+* Heroku
 
 
 
