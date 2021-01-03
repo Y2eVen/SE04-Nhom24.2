@@ -16,10 +16,13 @@
 muốn của họ để sẵn sàng giúp đỡ họ.
 # 2. Goals
 * Xây dựng chatbot cứu trợ miền Trung - Sử dụng opensource của Facebook để dựng chatbot phân tích và trả lời tự động.
+* Nắm được cách hoạt động của Webhook
+* Nắm được cách hoạt động của AI và Machine Learning
+* Nâng cao khả năng làm việc nhóm
+* Nâng cao kỹ năng lập trình, xây dựng và phát triển phần mềm
 
-# 3. Objectives
 
-# 4. Kiến trúc hệ thống
+# 3. Kiến trúc hệ thống
 ![alt_text](SystemArchitecture.png)
 
 
@@ -30,9 +33,15 @@ muốn của họ để sẵn sàng giúp đỡ họ.
   * Python
 
 ## 4.2. Công cụ sử dụng
-* IDE Visual Studio Code
-* Heroku
+* IDE: Visual Studio Code
+* Server: Heroku
+* DB: PostgreSQL
+* Công cụ phát triển phần mềm: Github
+* Công cụ giao tiếp: Messenger, Github
 
 
+# 5. Hướng dẫn sử dụng
+* Truy cập FB Page: https://www.facebook.com/Chatbot-Mi%E1%BB%81n-Trung-100730141849563
+* Bấm vào nút "Send Message" là đã có thể giao tiếp với chatbot 
 
 
