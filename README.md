@@ -15,7 +15,21 @@
 * Chatbot của dự án đảm nhận module Hỗ trợ người cần cứu trợ bằng cách trò chuyện với họ, lắng nghe và ghi lại nguyện vọng, mong 
 muốn của họ để sẵn sàng giúp đỡ họ.
 # 2. Goals
-* Xây dựng chatbot cứu trợ miền Trung - Sử dụng opensource của Facebook để dựng chatbot phân tích và trả lời tự động.
+* Chatbot có thể hỏi đáp với mọi người theo kịch bản để thu thập thông tin
+  * Objectives:
+    * Xây dựng trang Facebook
+    * Cài đặt chatbot messenger cho trang FB
+    * Sử dụng Heroku tạo webhook và gắn vào trang FB
+    * Sử dụng opensource của Facebook để tạo 1 chatbot cơ bản có thể phân tích và trả lời tự động.
+    * Cài đặt cho chatbot hỏi theo kịch bản giống form thu thập thông tin người cần cứu trợ
+* Chatbot có thể trò chuyện giống như người thật
+  * Objectives:
+    * Sử dụng wit.ai có sẵn của FB để xử lý ngôn ngữ tự nhiên cho chatbot
+    * Sử dụng wit.ai và Underthesea - Vietnamese NLP Toolkit để nhận diện các thực thể trong câu nói của người dùng
+* Lưu được thông tin của người dùng đã cung cấp
+  * Objectives:
+    * Sử dụng PostgresSQL của Heroku để làm Database
+  
 * Nắm được cách hoạt động của Webhook
 * Nắm được cách hoạt động của AI và Machine Learning
 * Nâng cao khả năng làm việc nhóm
